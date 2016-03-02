@@ -1,0 +1,83 @@
+[[Image:KoboMini.jpg|thumb|right|300px|Kobo mini-eReader]]
+{{HardwareReader
+|Name=Kobo Mini
+|Company=[[Kobo]]
+|ReleaseDate=Oct 2012
+|Parent=Kobo Touch
+|Lang=English, French, German, Spanish, Dutch, Japanese, Italian, Portuguese
+|FileTypes=[[EPUB]], [[TXT]], [[HTML]], [[XHTML]], [[RTF]], [[CBZ]],[[CBR]], [[PDF]], [[JPEG]], [[GIF]], [[PNG]], [[TIFF]]
+|Overview=
+Pocket sized 5" [[E Ink]] eBook reader. Kobo Mini is the lightest, smallest full-featured (touchscreen and WiFi) eReader on the market. Don’t let its size fool you, though. Kobo Mini is packed with all the features Kobo is famous for, but now they’re pocket-sized for easy reading on the go. Kobo Mini is truly the anywhere eReader.
+|Specifications=
+* Size: 102 x 133 x 10 mm (4 x 5.2 x 0.4 in)
+* Weight: 134 g (4.73 oz)
+* Processor: 800 MHz processor (Freescale i.MX 507, featuring an ARM7 core)
+* Display: 5" [[E Ink]] touchscreen; 800x600; 16-level grey scale
+** Screen: Responsive [[touchscreen]] for glare-free, fingerprint-resistant reading
+* Buttons: Power on/off
+* Connectivity: [[WiFi]] 802.11 b/g/n and Micro [[USB]]
+* Storage: 2 GB - 1 GB available for book storage
+* Battery: Over 1 month with WiFi turned off (1000mAh at 3.7V)
+* Colors: Available in black or white
+** Three interchangeable backs are available for purchase: ruby, purple, and teal
+* eBookstore: over 3 million eBooks, newspapers, and magazines
+** Over 1 million free titles
+* Kobo Everywhere: Kobo eBooks are stored safely in the cloud – retrieve them at anytime
+** Bookmarks and settings are seamlessly synced across all your Kobo eReading apps and devices
+* Social Reading: Includes Reading Life — Track your reading stats and share what you're reading, favorite passages, and Reading Life awards to Facebook
+* Kobo Picks: Brings readers personalized recommendations based on their feedback and preferences
+* Fonts: 8 font styles with 24 font sizes and exclusive weight and sharpness settings
+* Dictionary: Built-in dictionary
+* Notes, Quotes: Highlight text, type notes, and share to Facebook
+* Advanced Features: Library personalization, predictive search, brightness controls, double-tap PDF zoom in, SimpleTurn™ page turning
+* Open: Read almost any eBook on your Kobo Mini
+** Supports ePub and Adobe DRM
+* File Types: [[EPUB]], [[PDF]], [[JPEG]], [[GIF]], [[PNG]], [[TIFF]], [[TXT]], (X)[[HTML]], [[RTF]], [[CBZ]], [[CBR]]
+|History=
+|SeeAlso=
+* http://www.kobo.com/kobomini/
+}}
+= Hacking the Kobo Mini =
+== Disassembly ==
+
+<span style="color:red">This voids any warranty. Do not do this if you are not ready to risk to break your device. Be sure to know what you are doing.</span>
+
+The front cover should be seen as the mounting base of the other parts. Lay it flatly on a plain surface. Check that the e-ink screen is not touched by any parts lying around on that surface.
+
+The plastic back is snapped into the plastic front cover. Use a soft item (like e.g. a guitar pick, a credit card or similar - not a hard metal item!) to move the snapping latches out. Start at the bottom at the mini USB port, you can move the plastic the easiest there. This outer cover as the latches which snap into holes in the inner cover (next paragraph).
+
+You will see another plastic cover. Use a very small Phillips screwdriver to losen the 6 screws you see.
+Carefully remove the plastic cover, but watch out: it is snapped under some latches at the right side (device laying screen down on the surface, USB port at bottom).
+
+See http://www.mobileread.com/forums/showthread.php?t=193321 for pictures of the opened Kobo Mini.
+
+== MicroSD card ==
+
+The Kobo Mini software is stored on a MicroSD card that can be accessed when the back covers are removed (see above). You can (and maybe: should!) make a backup of this card to be on the safe side when messing with the software.
+
+The data layout on the card is as follows:
+* Boot sector: At the beginning of the card's memory there's a MBR with a partition table. Three partitions are laid out: root filesystem, backup root filesystem and user data store.
+* Following the boot sector, there is miscellaneous data, up to the start of the first partition
+** configuration data, like the serial number
+** UBoot, the boot loader, starting at device offset 0x400 (1024 dec) (this appears to be part of the UBoot binary from offset 0x400 onwards; i.e., the first 0x400 bytes are not used)
+** Config data, starting at device offset 0x80000 (524288 dec)
+** Linux kernel, starting at device offset 0x100000 (1048576 dec) (actual kernel is compressed, stored is a loader plus the compressed data)
+** E-Ink waveform data, starting at device offset 0x500000 (5242880 dec)
+** other stuff? TBD
+* First partition: root filesystem
+* Second partition: backup root filesystem
+* Third partition: user document store
+== Hardware Hacking ==
+When the first back cover is removed (it is only snapped, not fastened by screws), there is a small 1mm hole at the bottom, at the bottom left of the CE/FCC sign. This hole allows access to a reset microswitch. Use a needle or paper clip to press the reset button if ever needed.
+
+The MicroSD card can be exchanged. Note that a replacement needs to have an exact copy of the start of the original MicroSD card (clone the first ~10MByte) and clones of the original first and second partitions. The third partition can be adapted in size to the new MicroSD card.
+
+The device sports an UART port with TTL levels. It is accessible when the back covers are removed. It has 2.54mm pre-drilled solder pads. It uses 3.3V voltage levels. 
+
+The device will work without a connected battery. It is powered via USB under such circumstances.
+To disconnect the battery, move the white plug upwards (away from the board), starting at the end opposite the battery cables.
+
+===How about a GPS===
+There is a [http://www.dotmana.com/weblog/2014/05/kobo-mini-gps-mod/ GPS mod] available for the mini. There is also a battery extension on the same web site for longer battery life.
+
+[[category: Kobo]][[category:DIY]]
